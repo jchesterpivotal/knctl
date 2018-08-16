@@ -28,6 +28,7 @@ knctl build [flags]
       --git-url string           Set Git URL
   -h, --help                     help for build
   -i, --image string             Set image URL
+  -l, --local-registry           Use local registry
   -n, --namespace string         Specified namespace ($KNCTL_NAMESPACE)
       --service-account string   Set service account name for building
       --template string          Set template name

@@ -22,6 +22,7 @@ import (
 
 	"github.com/knative/build/pkg/apis/build/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
+	// apirand "k8s.io/apimachinery/pkg/util/rand"
 )
 
 const (
@@ -43,6 +44,15 @@ type BuildSpecOpts struct {
 	TemplateEnv  []string
 
 	Image string
+
+	LocalRegistry bool
+}
+
+func (o BuildSpecOpts) ResolvedImage() string {
+	if o.LocalRegistry {
+		return "kube-registry.kube-system.svc.cluster.local:5000/r/something" // TODO apirand.String(10)
+	}
+	return o.Image
 }
 
 func (s BuildSpec) Build(opts BuildSpecOpts) (v1alpha1.BuildSpec, error) {
@@ -129,7 +139,7 @@ func (s BuildSpec) nonTemplateSteps(opts BuildSpecOpts) []corev1.Container {
 			Image: "gcr.io/kaniko-project/executor",
 			Args: []string{
 				"--dockerfile=/workspace/Dockerfile",
-				"--destination=" + opts.Image,
+				"--destination=" + opts.ResolvedImage(),
 			},
 		},
 	}
@@ -158,7 +168,7 @@ func (s BuildSpec) templateArgs(opts BuildSpecOpts) ([]v1alpha1.ArgumentSpec, er
 	if !hadImageArg {
 		args = append(args, v1alpha1.ArgumentSpec{
 			Name:  buildSpecImageArgName,
-			Value: opts.Image,
+			Value: opts.ResolvedImage(),
 		})
 	}
 

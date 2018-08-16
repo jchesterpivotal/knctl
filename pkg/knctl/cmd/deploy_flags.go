@@ -35,7 +35,7 @@ func (s *DeployFlags) Set(cmd *cobra.Command) {
 	// TODO separate service account for pulling?
 
 	cmd.Flags().StringVarP(&s.Image, "image", "i", "", "Set image URL")
-	cmd.MarkFlagRequired("image")
+	// cmd.MarkFlagRequired("image")
 
 	cmd.Flags().StringSliceVarP(&s.Env, "env", "e", nil, "Set environment variable (format: key=value) (can be specified multiple times)")
 }

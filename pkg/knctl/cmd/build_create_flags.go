@@ -35,7 +35,7 @@ func (s *BuildCreateFlags) Set(cmd *cobra.Command) {
 	s.BuildCreateArgsFlags.Set(cmd)
 
 	cmd.Flags().StringVarP(&s.Image, "image", "i", "", "Set image URL")
-	cmd.MarkFlagRequired("image")
+	// cmd.MarkFlagRequired("image")
 }
 
 func (s *BuildCreateFlags) Validate() error {
@@ -53,6 +53,8 @@ func (s *BuildCreateArgsFlags) Set(cmd *cobra.Command) {
 	cmd.Flags().StringVar(&s.Template, "template", "", "Set template name")
 	cmd.Flags().StringSliceVar(&s.TemplateArgs, "template-arg", nil, "Set template argument (format: key=value) (can be specified multiple times)")
 	cmd.Flags().StringSliceVar(&s.TemplateEnv, "template-env", nil, "Set template environment variable (format: key=value) (can be specified multiple times)")
+
+	cmd.Flags().BoolVarP(&s.LocalRegistry, "local-registry", "l", false, "Use local registry") // TODO description
 }
 
 func (s *BuildCreateArgsFlags) IsProvided() bool {

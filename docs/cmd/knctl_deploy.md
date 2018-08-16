@@ -31,6 +31,7 @@ knctl deploy [flags]
       --git-url string           Set Git URL
   -h, --help                     help for deploy
   -i, --image string             Set image URL
+  -l, --local-registry           Use local registry
   -n, --namespace string         Specified namespace ($KNCTL_NAMESPACE)
   -s, --service string           Specified service
       --service-account string   Set service account name for building
